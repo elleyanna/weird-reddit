@@ -1,1 +1,1 @@
-# weird-reddit
+# Weird Reddit
