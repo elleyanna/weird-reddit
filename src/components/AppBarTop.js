@@ -27,16 +27,14 @@ function AppBarTop() {
   const classes = useStyles();
   return (
     <div className={classes.root}>
-      <div className={classes.appBarContainer}>
-        <AppBar color="transparent" position="static">
-          <Toolbar>
-            <ChildCareIcon className={classes.weirdIcon} fontSize="large" />
-            <Typography variant="h1" className={classes.title}>
-              Weird Reddit
-            </Typography>
-          </Toolbar>
-        </AppBar>
-      </div>
+      <AppBar className={classes.appBarContainer} color="white">
+        <Toolbar>
+          <ChildCareIcon className={classes.weirdIcon} fontSize="large" />
+          <Typography variant="h3" className={classes.title}>
+            weird reddit
+          </Typography>
+        </Toolbar>
+      </AppBar>
     </div>
   );
 }
