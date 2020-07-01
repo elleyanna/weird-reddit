@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react";
 import AppBarTop from "./components/AppBarTop.js";
 import CardCollection from "./components/CardCollection.js";
 import Button from "@material-ui/core/Button";
+import Box from "@material-ui/core/Box";
 import Typography from "@material-ui/core/Typography";
 import renAndStimpy from "./assets/renAndStimpy.png";
 import ren from "./assets/ren.jpg";
@@ -18,6 +19,15 @@ const useStyles = makeStyles((theme) => ({
     width: "auto",
     minWidth: "100%",
     opacity: 0.7,
+  },
+  buttonContainer: {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    marginBottom: theme.spacing(8),
+  },
+  pageNumber: {
+    color: "rgba(0, 0, 0, 0.54)",
   },
 }));
 
@@ -38,7 +48,7 @@ const App = () => {
   const [items, setItems] = useState({
     currentSubreddit:
       selectedSubreddit === "" ? subredditArray.join("+") : selectedSubreddit,
-    // sort: "hot",
+    sort: "hot",
     files: [],
     after: null,
     before: null,
@@ -53,7 +63,7 @@ const App = () => {
       currentSubreddit = selectedSubreddit;
     }
 
-    fetch(redditUrl + items.currentSubreddit + "/" + "hot" + ".json")
+    fetch(redditUrl + currentSubreddit + "/" + items.sort + ".json")
       .then((res) => res.json())
       .then((data) => {
         window.scrollTo(0, 0);
@@ -78,7 +88,7 @@ const App = () => {
       redditUrl +
         currentSubreddit +
         "/" +
-        "hot" +
+        items.sort +
         ".json?count=" +
         items.page * 5 +
         "&after=" +
@@ -109,7 +119,7 @@ const App = () => {
       redditUrl +
         currentSubreddit +
         "/" +
-        "hot" +
+        items.sort +
         ".json?count=" +
         items.page / 5 +
         "&after=" +
@@ -137,9 +147,8 @@ const App = () => {
       ...items,
       files: [],
       currentSubreddit: sub,
-      // page: 1,
     });
-    fetch(redditUrl + sub + "/" + "hot" + ".json")
+    fetch(redditUrl + sub + "/" + items.sort + ".json")
       .then((res) => res.json())
       .then((data) => {
         setItems({
@@ -161,10 +170,32 @@ const App = () => {
       />
 
       <CardCollection files={items.files} icon={ren} />
-      {items.page > 1 && <Button onClick={prevPage()}>Prev</Button>}
+      <div className={classes.buttonContainer}>
+        {items.page > 1 && (
+          <Button
+            variant="contained"
+            size="large"
+            color="secondary"
+            onClick={prevPage()}
+          >
+            Prev
+          </Button>
+        )}
+        <Typography variant="h3" className={classes.pageNumber}>
+          <Box fontFamily="Monospace" m={1}>
+            Page {items.page}
+          </Box>
+        </Typography>
+        <Button
+          variant="contained"
+          size="large"
+          color="secondary"
+          onClick={nextPage()}
+        >
+          Next
+        </Button>
+      </div>
 
-      <Typography>Page {items.page}</Typography>
-      <Button onClick={nextPage()}>Next</Button>
       <img
         alt="background"
         className={classes.renAndStimpy}
