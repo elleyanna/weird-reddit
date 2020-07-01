@@ -4,19 +4,30 @@ import AppBarTop from "./components/AppBarTop.js";
 import CardCollection from "./components/CardCollection.js";
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
-import renAndStimpy from "./assets/renAndStimpy.png";
+// import renAndStimpy from "./assets/renAndStimpy.png";
+import renRightCorner from "./assets/renRightCorner.png";
+import stimpyLeftCorner from "./assets/stimpyLeftCorner.png";
 import ren from "./assets/ren.jpg";
 import { makeStyles } from "@material-ui/core/styles";
 
 const useStyles = makeStyles((theme) => ({
   container: {
-    backgroundImage: `url(${renAndStimpy})`,
-    position: "absolute",
-    backgroundSize: "cover",
-    width: "100%",
-    height: "100%",
-    overflow: "auto",
+    // backgroundImage:
+    // "linear-gradient(to left, rgba(254, 107, 139, .5), rgba(255,142,83,.8))",
+  },
+  ren: {
+    position: "fixed",
+    right: 0,
+    bottom: 0,
     zIndex: "-1",
+    height: "100%",
+  },
+  stimpy: {
+    position: "fixed",
+    left: 0,
+    bottom: 0,
+    zIndex: "-1",
+    height: "70%",
   },
 }));
 
@@ -143,6 +154,8 @@ const App = () => {
       <Button onClick={prevPage()}>Prev</Button>
       <Typography>Page {items.page}</Typography>
       <Button onClick={nextPage()}>Next</Button>
+      <img className={classes.stimpy} src={stimpyLeftCorner} />
+      <img className={classes.ren} src={renRightCorner} />
     </div>
   );
 };
