@@ -5,6 +5,7 @@ import CardCollection from "./components/CardCollection.js";
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 import renAndStimpy from "./assets/renAndStimpy.png";
+import ren from "./assets/ren.jpg";
 import { makeStyles } from "@material-ui/core/styles";
 
 const useStyles = makeStyles((theme) => ({
@@ -51,19 +52,17 @@ const App = () => {
     fetch(redditUrl + items.currentSubreddit + "/" + items.sort + ".json")
       .then((res) => res.json())
       .then((data) => {
+        window.scrollTo(0, 0);
         setItems({
           ...items,
           files: data.data.children,
           after: data.data.after,
           before: data.data.before,
         });
-        window.scrollTo(0, 0);
       });
-    // .catch(console.log);
   }, []);
 
   const nextPage = () => () => {
-    window.scrollTo(0, 0);
     fetch(
       redditUrl +
         items.currentSubreddit +
@@ -76,6 +75,7 @@ const App = () => {
     )
       .then((res) => res.json())
       .then((data) => {
+        window.scrollTo(0, 0);
         setItems({
           ...items,
           files: data.data.children,
@@ -83,13 +83,10 @@ const App = () => {
           before: data.data.before,
           page: items.page + 1,
         });
-        // window.scrollTo(0, 0);
-      })
-      .catch(console.log);
+      });
   };
 
   const prevPage = () => () => {
-    window.scrollTo(0, 0);
     fetch(
       redditUrl +
         items.currentSubreddit +
@@ -102,7 +99,7 @@ const App = () => {
     )
       .then((res) => res.json())
       .then((data) => {
-        // window.scrollTo(0, 0);
+        window.scrollTo(0, 0);
         let newState = {
           ...items,
           files: data.data.children,
@@ -113,8 +110,7 @@ const App = () => {
           newState.page = items.page - 1;
         }
         setItems(newState);
-      })
-      .catch(console.log);
+      });
   };
 
   // const changeSubreddit = (sub) => () => {
@@ -143,11 +139,10 @@ const App = () => {
   return (
     <div className={classes.container}>
       <AppBarTop />
-      <CardCollection files={items.files} icon={renAndStimpy} />
+      <CardCollection files={items.files} icon={ren} />
       <Button onClick={prevPage()}>Prev</Button>
       <Typography>Page {items.page}</Typography>
       <Button onClick={nextPage()}>Next</Button>
-      {/* <Button onClick={changeSubreddit()}>Next</Button> */}
     </div>
   );
 };
