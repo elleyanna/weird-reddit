@@ -4,63 +4,56 @@ import AppBarTop from "./components/AppBarTop.js";
 import CardCollection from "./components/CardCollection.js";
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
-// import renAndStimpy from "./assets/renAndStimpy.png";
-import renRightCorner from "./assets/renRightCorner.png";
-import stimpyLeftCorner from "./assets/stimpyLeftCorner.png";
+import renAndStimpy from "./assets/renAndStimpy.png";
 import ren from "./assets/ren.jpg";
 import { makeStyles } from "@material-ui/core/styles";
 
 const useStyles = makeStyles((theme) => ({
-  container: {
-    // backgroundImage:
-    // "linear-gradient(to left, rgba(254, 107, 139, .5), rgba(255,142,83,.8))",
-  },
-  ren: {
-    position: "fixed",
-    right: 0,
-    bottom: 0,
-    zIndex: "-1",
-    height: "100%",
-  },
-  stimpy: {
+  renAndStimpy: {
     position: "fixed",
     left: 0,
     bottom: 0,
     zIndex: "-1",
-    height: "70%",
+    height: "100%",
+    width: "auto",
+    minWidth: "100%",
+    opacity: 0.7,
   },
 }));
-
-// const [subredditIcon, setSubredditIcon] = useState({
-//   icon: null,
-// });
-
-// const redditSubredditArtAPI = useEffect(() => {
-//   fetch("https://www.reddit.com/r/CreepyArt/about.json")
-//     .then((res) => res.json())
-//     .then((data) => {
-//       setSubredditIcon({
-//         icon: data.data.icon_img,
-//       });
-//     });
-// }, []);
 
 const App = () => {
   const classes = useStyles();
 
   const redditUrl = "https://www.reddit.com/r/";
 
+  const subredditArray = [
+    "CreepyArt",
+    "UnusualArt",
+    "alternativeart",
+    "wtfart",
+  ];
+
+  const [selectedSubreddit, setSelectedSubreddit] = useState("");
+
   const [items, setItems] = useState({
-    currentSubreddit: "CreepyArt+UnusualArt+alternativeart+wtfart",
-    sort: "hot",
+    currentSubreddit:
+      selectedSubreddit === "" ? subredditArray.join("+") : selectedSubreddit,
+    // sort: "hot",
     files: [],
     after: null,
     before: null,
     page: 1,
   });
 
-  const initialFetch = useEffect(() => {
-    fetch(redditUrl + items.currentSubreddit + "/" + items.sort + ".json")
+  useEffect(() => {
+    let currentSubreddit;
+    if (selectedSubreddit === "") {
+      currentSubreddit = items.currentSubreddit;
+    } else {
+      currentSubreddit = selectedSubreddit;
+    }
+
+    fetch(redditUrl + items.currentSubreddit + "/" + "hot" + ".json")
       .then((res) => res.json())
       .then((data) => {
         window.scrollTo(0, 0);
@@ -74,11 +67,18 @@ const App = () => {
   }, []);
 
   const nextPage = () => () => {
+    let currentSubreddit;
+    if (selectedSubreddit === "") {
+      currentSubreddit = items.currentSubreddit;
+    } else {
+      currentSubreddit = selectedSubreddit;
+    }
+
     fetch(
       redditUrl +
-        items.currentSubreddit +
+        currentSubreddit +
         "/" +
-        items.sort +
+        "hot" +
         ".json?count=" +
         items.page * 5 +
         "&after=" +
@@ -98,13 +98,20 @@ const App = () => {
   };
 
   const prevPage = () => () => {
+    let currentSubreddit;
+    if (selectedSubreddit === "") {
+      currentSubreddit = items.currentSubreddit;
+    } else {
+      currentSubreddit = selectedSubreddit;
+    }
+
     fetch(
       redditUrl +
-        items.currentSubreddit +
+        currentSubreddit +
         "/" +
-        items.sort +
+        "hot" +
         ".json?count=" +
-        ((items.page - 1) * 25 - 1) +
+        items.page / 5 +
         "&after=" +
         items.before
     )
@@ -124,38 +131,45 @@ const App = () => {
       });
   };
 
-  // const changeSubreddit = (sub) => () => {
-  //   if (sub === null || "undefined") {
-  //     sub = items.currentSubreddit;
-  //   }
-  //   setItems({
-  //     ...items,
-  //     files: [],
-  //     currentSubreddit: sub,
-  //     page: 1,
-  //   });
-  //   fetch(redditUrl + items.currentSubreddit + "/" + items.sort + ".json")
-  //     .then((res) => res.json())
-  //     .then((data) => {
-  //       setItems({
-  //         files: data.data.children,
-  //         after: data.data.after,
-  //         before: data.data.before,
-  //       });
-  //       window.scrollTo(0, 0);
-  //     });
-  //   // .catch(console.log);
-  // };
+  const changeSubreddit = (sub) => {
+    setSelectedSubreddit(sub);
+    setItems({
+      ...items,
+      files: [],
+      currentSubreddit: sub,
+      // page: 1,
+    });
+    fetch(redditUrl + sub + "/" + "hot" + ".json")
+      .then((res) => res.json())
+      .then((data) => {
+        setItems({
+          ...items,
+          page: 1,
+          files: data.data.children,
+          after: data.data.after,
+          before: data.data.before,
+        });
+        window.scrollTo(0, 0);
+      });
+  };
 
   return (
     <div className={classes.container}>
-      <AppBarTop />
+      <AppBarTop
+        subreddits={subredditArray}
+        onMenuItemSelected={changeSubreddit}
+      />
+
       <CardCollection files={items.files} icon={ren} />
-      <Button onClick={prevPage()}>Prev</Button>
+      {items.page > 1 && <Button onClick={prevPage()}>Prev</Button>}
+
       <Typography>Page {items.page}</Typography>
       <Button onClick={nextPage()}>Next</Button>
-      <img className={classes.stimpy} src={stimpyLeftCorner} />
-      <img className={classes.ren} src={renRightCorner} />
+      <img
+        alt="background"
+        className={classes.renAndStimpy}
+        src={renAndStimpy}
+      />
     </div>
   );
 };
