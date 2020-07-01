@@ -9,9 +9,6 @@ import eyeballs from "../assets/eyeballs.png";
 import { makeStyles } from "@material-ui/core/styles";
 
 const useStyles = makeStyles((theme) => ({
-  root: {
-    flexGrow: 1,
-  },
   appBarContainer: {
     backgroundImage: `url(${eyeballs})`,
   },
@@ -26,7 +23,7 @@ const useStyles = makeStyles((theme) => ({
 function AppBarTop() {
   const classes = useStyles();
   return (
-    <div className={classes.root}>
+    <div>
       <AppBar className={classes.appBarContainer} color="white">
         <Toolbar>
           <ChildCareIcon className={classes.weirdIcon} fontSize="large" />
