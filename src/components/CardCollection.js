@@ -26,9 +26,9 @@ const CardCollection = ({ files, icon }) => {
           justify="space-between"
           spacing={3}
         >
-          {files.map((file) => {
+          {files.map((file, index) => {
             return (
-              <Grid item>
+              <Grid key={index} item>
                 <Card file={file} icon={icon} />
               </Grid>
             );
