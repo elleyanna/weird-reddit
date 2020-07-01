@@ -23,7 +23,6 @@ const CardItem = ({ file, icon }) => {
   return (
     <Card className={classes.root}>
       <CardActionArea>
-        {console.log(file.data)}
         <CardHeader
           avatar={
             <Avatar
