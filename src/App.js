@@ -50,6 +50,7 @@ const App = () => {
     "UnusualArt",
     "alternativeart",
     "wtfart",
+    "atbge",
   ];
 
   const [selectedSubreddit, setSelectedSubreddit] = useState("");
@@ -109,6 +110,7 @@ const App = () => {
     )
       .then((res) => res.json())
       .then((data) => {
+        console.log(data);
         window.scrollTo(0, 0);
         setItems({
           ...items,
@@ -202,7 +204,7 @@ const App = () => {
                 color="secondary"
                 onClick={prevPage()}
               >
-                Prev
+                prev
               </Button>
             )}
             <Typography variant="h3" className={classes.pageNumber}>
@@ -216,7 +218,7 @@ const App = () => {
               color="secondary"
               onClick={nextPage()}
             >
-              Next
+              next
             </Button>
           </div>
         </div>

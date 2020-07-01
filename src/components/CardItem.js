@@ -10,6 +10,7 @@ import CardMedia from "@material-ui/core/CardMedia";
 import Typography from "@material-ui/core/Typography";
 import ArrowUpwardIcon from "@material-ui/icons/ArrowUpward";
 import spinner from "../assets/eyeball.gif";
+import eyeballs from "../assets/eyeballs.png";
 
 const useStyles = makeStyles({
   root: {
@@ -43,9 +44,13 @@ const CardItem = ({ file, icon }) => {
           <CardMedia
             component="img"
             src={
-              file.data.domain.includes("red")
+              file.data.thumbnail === "nsfw"
+                ? file.data.url_overridden_by_dest
+                : file.data.domain.includes("i.redd.it")
                 ? file.data.url
                 : file.data.thumbnail
+                ? file.data.thumbnail
+                : eyeballs
             }
             alt={file.data.url}
             height="160"
