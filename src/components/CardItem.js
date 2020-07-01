@@ -9,9 +9,11 @@ import CardActions from "@material-ui/core/CardActions";
 import CardMedia from "@material-ui/core/CardMedia";
 import Typography from "@material-ui/core/Typography";
 import ArrowUpwardIcon from "@material-ui/icons/ArrowUpward";
+import spinner from "../assets/eyeball.gif";
 
 const useStyles = makeStyles({
   root: {
+    minWidth: 345,
     maxWidth: 345,
   },
   buttonBase: {
@@ -22,7 +24,7 @@ const useStyles = makeStyles({
 
 const CardItem = ({ file, icon }) => {
   const classes = useStyles();
-
+  console.log(file);
   return (
     <Card className={classes.root}>
       <CardActionArea>
@@ -30,7 +32,7 @@ const CardItem = ({ file, icon }) => {
           rel="noopener"
           color="inherit"
           target="_blank"
-          href={file.data.url}
+          href={`http://www.reddit.com${file.data.permalink}`}
           underline="none"
         >
           <CardHeader
@@ -38,19 +40,15 @@ const CardItem = ({ file, icon }) => {
             title={file.data.title}
             subheader={`r/${file.data.subreddit}`}
           />
-
           <CardMedia
-            component={file.data.domain === "youtu.be" ? "iframe" : "img"}
+            component="img"
             src={
-              file.data.domain === "youtu.be"
-                ? `https://www.youtube.com/embed/${file.data.url
-                    .split("/")
-                    .pop()}`
-                : null
+              file.data.domain.includes("red")
+                ? file.data.url
+                : file.data.thumbnail
             }
-            image={file.data.domain !== "youtu.be" ? file.data.url : null}
             alt={file.data.url}
-            height="140"
+            height="160"
             title={file.data.title}
           />
         </Link>
@@ -58,7 +56,7 @@ const CardItem = ({ file, icon }) => {
       <CardActions>
         <ArrowUpwardIcon />
         <Typography variant="subtitle1">{file.data.ups}</Typography>
-        <Typography variant="caption">u/{file.data.author}</Typography>
+        <Typography variant="caption">{`u/${file.data.author}`}</Typography>
       </CardActions>
     </Card>
   );
