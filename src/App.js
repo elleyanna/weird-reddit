@@ -30,9 +30,13 @@ const useStyles = makeStyles((theme) => ({
   pageNumber: {
     color: "rgba(0, 0, 0, 0.54)",
   },
+  spinnerContainer: {
+    display: "flex",
+    justifyContent: "center",
+  },
   spinner: {
-    width: "100%",
-    height: "100%",
+    width: "60%",
+    height: "60%",
   },
 }));
 
@@ -184,7 +188,9 @@ const App = () => {
       />
 
       {isLoading ? (
-        <img src={spinner} className={classes.spinner} />
+        <div className={classes.spinnerContainer}>
+          <img src={spinner} className={classes.spinner} />
+        </div>
       ) : (
         <div>
           <CardCollection files={items.files} icon={ren} />
