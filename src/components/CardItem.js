@@ -6,10 +6,10 @@ import Avatar from "@material-ui/core/Avatar";
 import IconButton from "@material-ui/core/IconButton";
 import CardActionArea from "@material-ui/core/CardActionArea";
 import CardActions from "@material-ui/core/CardActions";
-import CardContent from "@material-ui/core/CardContent";
 import CardMedia from "@material-ui/core/CardMedia";
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
+import ArrowUpwardIcon from "@material-ui/icons/ArrowUpward";
 
 const useStyles = makeStyles({
   root: {
@@ -19,7 +19,6 @@ const useStyles = makeStyles({
 
 const CardItem = ({ file, icon }) => {
   const classes = useStyles();
-
   return (
     <Card className={classes.root}>
       <CardActionArea>
@@ -30,11 +29,6 @@ const CardItem = ({ file, icon }) => {
               src={icon}
               // className={classes.avatar}
             />
-          }
-          action={
-            <IconButton aria-label="settings">
-              {/* <MoreVertIcon />x */}
-            </IconButton>
           }
           title={file.data.title}
           subheader={`r/${file.data.subreddit}`}
@@ -53,19 +47,11 @@ const CardItem = ({ file, icon }) => {
           height="140"
           title={file.data.title}
         />
-        {/* <CardContent>
-          <Typography variant="body2" color="textSecondary" component="p">
-            Content
-          </Typography>
-        </CardContent> */}
       </CardActionArea>
       <CardActions>
-        <Button size="small" color="primary">
-          Share
-        </Button>
-        <Button size="small" color="primary">
-          Learn More
-        </Button>
+        <ArrowUpwardIcon />
+        <Typography variant="subtitle1">{file.data.ups}</Typography>
+        <Typography variant="caption">u/{file.data.author}</Typography>
       </CardActions>
     </Card>
   );
