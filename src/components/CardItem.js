@@ -23,8 +23,6 @@ const useStyles = makeStyles({
 const CardItem = ({ file, icon }) => {
   const classes = useStyles();
 
-  const preventDefault = (event) => event.preventDefault();
-
   return (
     <Card className={classes.root}>
       <CardActionArea>

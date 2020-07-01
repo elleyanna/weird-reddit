@@ -7,6 +7,7 @@ import Box from "@material-ui/core/Box";
 import Typography from "@material-ui/core/Typography";
 import renAndStimpy from "./assets/renAndStimpy.png";
 import ren from "./assets/ren.jpg";
+import spinner from "./assets/eyeball.gif";
 import { makeStyles } from "@material-ui/core/styles";
 
 const useStyles = makeStyles((theme) => ({
@@ -29,6 +30,10 @@ const useStyles = makeStyles((theme) => ({
   pageNumber: {
     color: "rgba(0, 0, 0, 0.54)",
   },
+  spinner: {
+    width: "100%",
+    height: "100%",
+  },
 }));
 
 const App = () => {
@@ -44,6 +49,7 @@ const App = () => {
   ];
 
   const [selectedSubreddit, setSelectedSubreddit] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
   const [items, setItems] = useState({
     currentSubreddit:
@@ -56,6 +62,7 @@ const App = () => {
   });
 
   useEffect(() => {
+    setIsLoading(true);
     let currentSubreddit;
     if (selectedSubreddit === "") {
       currentSubreddit = items.currentSubreddit;
@@ -73,10 +80,12 @@ const App = () => {
           after: data.data.after,
           before: data.data.before,
         });
+        setIsLoading(false);
       });
   }, []);
 
   const nextPage = () => () => {
+    setIsLoading(true);
     let currentSubreddit;
     if (selectedSubreddit === "") {
       currentSubreddit = items.currentSubreddit;
@@ -104,10 +113,12 @@ const App = () => {
           before: data.data.before,
           page: items.page + 1,
         });
+        setIsLoading(false);
       });
   };
 
   const prevPage = () => () => {
+    setIsLoading(true);
     let currentSubreddit;
     if (selectedSubreddit === "") {
       currentSubreddit = items.currentSubreddit;
@@ -138,10 +149,12 @@ const App = () => {
           newState.page = items.page - 1;
         }
         setItems(newState);
+        setIsLoading(false);
       });
   };
 
   const changeSubreddit = (sub) => {
+    setIsLoading(true);
     setSelectedSubreddit(sub);
     setItems({
       ...items,
@@ -159,6 +172,7 @@ const App = () => {
           before: data.data.before,
         });
         window.scrollTo(0, 0);
+        setIsLoading(false);
       });
   };
 
@@ -169,32 +183,38 @@ const App = () => {
         onMenuItemSelected={changeSubreddit}
       />
 
-      <CardCollection files={items.files} icon={ren} />
-      <div className={classes.buttonContainer}>
-        {items.page > 1 && (
-          <Button
-            variant="contained"
-            size="large"
-            color="secondary"
-            onClick={prevPage()}
-          >
-            Prev
-          </Button>
-        )}
-        <Typography variant="h3" className={classes.pageNumber}>
-          <Box fontFamily="Monospace" m={1}>
-            Page {items.page}
-          </Box>
-        </Typography>
-        <Button
-          variant="contained"
-          size="large"
-          color="secondary"
-          onClick={nextPage()}
-        >
-          Next
-        </Button>
-      </div>
+      {isLoading ? (
+        <img src={spinner} className={classes.spinner} />
+      ) : (
+        <div>
+          <CardCollection files={items.files} icon={ren} />
+          <div className={classes.buttonContainer}>
+            {items.page > 1 && (
+              <Button
+                variant="contained"
+                size="large"
+                color="secondary"
+                onClick={prevPage()}
+              >
+                Prev
+              </Button>
+            )}
+            <Typography variant="h3" className={classes.pageNumber}>
+              <Box fontFamily="Monospace" m={1}>
+                Page {items.page}
+              </Box>
+            </Typography>
+            <Button
+              variant="contained"
+              size="large"
+              color="secondary"
+              onClick={nextPage()}
+            >
+              Next
+            </Button>
+          </div>
+        </div>
+      )}
 
       <img
         alt="background"
