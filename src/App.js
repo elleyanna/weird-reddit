@@ -43,7 +43,7 @@ const useStyles = makeStyles((theme) => ({
 const App = () => {
   const classes = useStyles();
 
-  const redditUrl = "https://www.reddit.com/r/";
+  const redditUrlPath = "https://www.reddit.com/r/";
 
   const subredditArray = [
     "CreepyArt",
@@ -51,15 +51,20 @@ const App = () => {
     "alternativeart",
     "wtfart",
     "atbge",
+    "wimmelbilder",
+    "surrealmemes",
+    "AnimalsWithoutNecks",
   ];
 
-  const [selectedSubreddit, setSelectedSubreddit] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
+  const sortArray = ["hot", "top", "new", "rising"];
 
+  const [selectedSubreddit, setSelectedSubreddit] = useState("");
+  const [selectedSort, setSelectedSort] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
   const [items, setItems] = useState({
     currentSubreddit:
       selectedSubreddit === "" ? subredditArray.join("+") : selectedSubreddit,
-    sort: "hot",
+    sort: selectedSort === "" ? "hot" : selectedSort,
     files: [],
     after: null,
     before: null,
@@ -75,7 +80,7 @@ const App = () => {
       currentSubreddit = selectedSubreddit;
     }
 
-    fetch(redditUrl + currentSubreddit + "/" + items.sort + ".json")
+    fetch(redditUrlPath + currentSubreddit + "/" + items.sort + ".json")
       .then((res) => res.json())
       .then((data) => {
         window.scrollTo(0, 0);
@@ -99,7 +104,7 @@ const App = () => {
     }
 
     fetch(
-      redditUrl +
+      redditUrlPath +
         currentSubreddit +
         "/" +
         items.sort +
@@ -133,7 +138,7 @@ const App = () => {
     }
 
     fetch(
-      redditUrl +
+      redditUrlPath +
         currentSubreddit +
         "/" +
         items.sort +
@@ -167,7 +172,28 @@ const App = () => {
       files: [],
       currentSubreddit: sub,
     });
-    fetch(redditUrl + sub + "/" + items.sort + ".json")
+    fetch(redditUrlPath + sub + "/" + items.sort + ".json")
+      .then((res) => res.json())
+      .then((data) => {
+        setItems({
+          ...items,
+          page: 1,
+          files: data.data.children,
+          after: data.data.after,
+          before: data.data.before,
+        });
+        window.scrollTo(0, 0);
+        setIsLoading(false);
+      });
+  };
+  const changeSort = (sort) => {
+    setIsLoading(true);
+    setSelectedSort(sort);
+    setItems({
+      ...items,
+      files: [],
+    });
+    fetch(redditUrlPath + items.currentSubreddit + "/" + sort + ".json")
       .then((res) => res.json())
       .then((data) => {
         setItems({
@@ -186,9 +212,10 @@ const App = () => {
     <div className={classes.container}>
       <AppBarTop
         subreddits={subredditArray}
-        onMenuItemSelected={changeSubreddit}
+        sortOptions={sortArray}
+        onSubredditMenuItemSelected={changeSubreddit}
+        onSortOptionSelected={changeSort}
       />
-
       {isLoading ? (
         <div className={classes.spinnerContainer}>
           <img src={spinner} className={classes.spinner} />
@@ -223,7 +250,6 @@ const App = () => {
           </div>
         </div>
       )}
-
       <img
         alt="background"
         className={classes.renAndStimpy}
