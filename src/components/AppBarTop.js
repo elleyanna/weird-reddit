@@ -1,17 +1,18 @@
 import React from "react";
 
 import AppBar from "@material-ui/core/AppBar";
+import Box from "@material-ui/core/Box";
+import Button from "@material-ui/core/Button";
+import Fade from "@material-ui/core/Fade";
+import IconButton from "@material-ui/core/IconButton";
+import Link from "@material-ui/core/Link";
+import Menu from "@material-ui/core/Menu";
+import MenuIcon from "@material-ui/icons/Menu";
+import MenuItem from "@material-ui/core/MenuItem";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
-import IconButton from "@material-ui/core/IconButton";
-import Button from "@material-ui/core/Button";
-import MenuIcon from "@material-ui/icons/Menu";
-import Menu from "@material-ui/core/Menu";
-import MenuItem from "@material-ui/core/MenuItem";
-import Fade from "@material-ui/core/Fade";
-import Box from "@material-ui/core/Box";
+
 import githubIcon from "../assets/octocat.png";
-import Link from "@material-ui/core/Link";
 
 import { makeStyles } from "@material-ui/core/styles";
 
@@ -96,11 +97,12 @@ function AppBarTop({
           >
             All the weirdos
           </MenuItem>
-          {subreddits.map((subreddit) => {
+          {subreddits.map((subreddit, index) => {
             return (
               <MenuItem
                 onClick={handleSubredditMenuItemClick}
                 title={subreddit}
+                key={index}
               >
                 {subreddit}
               </MenuItem>
@@ -114,7 +116,7 @@ function AppBarTop({
           href="https://github.com/elleyanna/weird-reddit"
           underline="none"
         >
-          <img src={githubIcon} className={classes.githubIcon} />
+          <img src={githubIcon} alt="octocat" className={classes.githubIcon} />
         </Link>
         <Typography variant="h3" className={classes.title}>
           <Box fontFamily="Monospace" m={1}>
@@ -137,9 +139,13 @@ function AppBarTop({
           onClose={handleClose}
           TransitionComponent={Fade}
         >
-          {sortOptions.map((option) => {
+          {sortOptions.map((option, index) => {
             return (
-              <MenuItem title={option} onClick={handleSortOptionClick}>
+              <MenuItem
+                key={index}
+                title={option}
+                onClick={handleSortOptionClick}
+              >
                 {option}
               </MenuItem>
             );
