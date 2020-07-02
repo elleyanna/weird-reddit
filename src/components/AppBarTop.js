@@ -4,12 +4,14 @@ import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
 import IconButton from "@material-ui/core/IconButton";
+import Button from "@material-ui/core/Button";
 import MenuIcon from "@material-ui/icons/Menu";
 import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
 import Fade from "@material-ui/core/Fade";
 import Box from "@material-ui/core/Box";
-import ChildCareIcon from "@material-ui/icons/ChildCare";
+import githubIcon from "../assets/octocat.png";
+import Link from "@material-ui/core/Link";
 
 import { makeStyles } from "@material-ui/core/styles";
 
@@ -18,16 +20,10 @@ const useStyles = makeStyles((theme) => ({
     backgroundImage:
       "linear-gradient(to left, rgba(254, 107, 139, .5), rgba(255,142,83,.8))",
   },
-  weirdIcon: {
-    marginTop: theme.spacing(2),
-    marginLeft: theme.spacing(2),
-  },
-  weirdIcon2: {
-    marginBottom: theme.spacing(2),
-  },
-  weirdIcon3: {
-    marginRight: theme.spacing(2),
-    marginTop: theme.spacing(2),
+  githubIcon: {
+    marginTop: theme.spacing(),
+    width: "25px",
+    height: "20px",
   },
   title: {
     flexGrow: 1,
@@ -35,23 +31,39 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function AppBarTop({ onMenuItemSelected, subreddits }) {
+function AppBarTop({
+  onSubredditMenuItemSelected,
+  onSortOptionSelected,
+  sortOptions,
+  subreddits,
+}) {
   const classes = useStyles();
 
-  const [anchorEl, setAnchorEl] = React.useState(null);
-  const open = Boolean(anchorEl);
+  const [anchorSubredditMenu, setAnchorSubredditMenu] = React.useState(null);
+  const subredditMenupOpen = Boolean(anchorSubredditMenu);
 
-  const handleMenuClick = (event) => {
-    setAnchorEl(event.currentTarget);
+  const [anchorSortMenu, setAnchorSortMenu] = React.useState(null);
+  const sortMenupOpen = Boolean(anchorSortMenu);
+
+  const handleSubredditMenuClick = (event) => {
+    setAnchorSubredditMenu(event.currentTarget);
+  };
+  const handleSortMenuClick = (event) => {
+    setAnchorSortMenu(event.currentTarget);
   };
 
-  const handleClick = (event) => {
-    onMenuItemSelected(event.currentTarget.title);
-    setAnchorEl(null);
+  const handleSubredditMenuItemClick = (event) => {
+    onSubredditMenuItemSelected(event.currentTarget.title);
+    setAnchorSubredditMenu(null);
+  };
+  const handleSortOptionClick = (event) => {
+    onSortOptionSelected(event.currentTarget.title);
+    setAnchorSortMenu(null);
   };
 
   const handleClose = () => {
-    setAnchorEl(null);
+    setAnchorSortMenu(null);
+    setAnchorSubredditMenu(null);
   };
   return (
     <AppBar
@@ -66,49 +78,73 @@ function AppBarTop({ onMenuItemSelected, subreddits }) {
           color="inherit"
           aria-label="fade-menu"
           aria-controls="fade-menu"
-          onClick={handleMenuClick}
+          onClick={handleSubredditMenuClick}
         >
           <MenuIcon />
         </IconButton>
         <Menu
           id="fade-menu"
-          anchorEl={anchorEl}
+          anchorEl={anchorSubredditMenu}
           keepMounted
-          open={open}
+          open={subredditMenupOpen}
           onClose={handleClose}
           TransitionComponent={Fade}
         >
-          <MenuItem onClick={handleClick} title={`"${subreddits.join("+")}"`}>
+          <MenuItem
+            onClick={handleSubredditMenuItemClick}
+            title={`"${subreddits.join("+")}"`}
+          >
             All the weirdos
           </MenuItem>
           {subreddits.map((subreddit) => {
             return (
-              <MenuItem onClick={handleClick} title={subreddit}>
+              <MenuItem
+                onClick={handleSubredditMenuItemClick}
+                title={subreddit}
+              >
                 {subreddit}
               </MenuItem>
             );
           })}
         </Menu>
-        <ChildCareIcon
-          color="action"
-          className={classes.weirdIcon}
-          fontSize="large"
-        />
-        <ChildCareIcon
-          color="action"
-          className={classes.weirdIcon2}
-          fontSize="large"
-        />
-        <ChildCareIcon
-          color="action"
-          className={classes.weirdIcon3}
-          fontSize="large"
-        />
+        <Link
+          rel="noopener"
+          color="inherit"
+          target="_blank"
+          href="https://github.com/elleyanna/weird-reddit"
+          underline="none"
+        >
+          <img src={githubIcon} className={classes.githubIcon} />
+        </Link>
         <Typography variant="h3" className={classes.title}>
           <Box fontFamily="Monospace" m={1}>
             weird reddit
           </Box>
         </Typography>
+        <Button
+          aria-controls="fade-menu"
+          aria-haspopup="true"
+          onClick={handleSortMenuClick}
+          variant="outlined"
+        >
+          Sort by
+        </Button>
+        <Menu
+          id="fade-menu"
+          anchorEl={anchorSortMenu}
+          keepMounted
+          open={sortMenupOpen}
+          onClose={handleClose}
+          TransitionComponent={Fade}
+        >
+          {sortOptions.map((option) => {
+            return (
+              <MenuItem title={option} onClick={handleSortOptionClick}>
+                {option}
+              </MenuItem>
+            );
+          })}
+        </Menu>
       </Toolbar>
     </AppBar>
   );
