@@ -1,5 +1,7 @@
 # Weird Reddit
 
+This project was built using React, React Hooks for state management, and Material UI for design and componentry.
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
