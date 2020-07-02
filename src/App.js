@@ -1,13 +1,16 @@
 import React, { useState, useEffect } from "react";
 
 import AppBarTop from "./components/AppBarTop.js";
-import CardCollection from "./components/CardCollection.js";
-import Button from "@material-ui/core/Button";
 import Box from "@material-ui/core/Box";
+import Button from "@material-ui/core/Button";
+import CardCollection from "./components/CardCollection.js";
 import Typography from "@material-ui/core/Typography";
+
 import renAndStimpy from "./assets/renAndStimpy.png";
 import ren from "./assets/ren.jpg";
+import theEnd from "./assets/theEnd.gif";
 import spinner from "./assets/eyeball.gif";
+
 import { makeStyles } from "@material-ui/core/styles";
 
 const useStyles = makeStyles((theme) => ({
@@ -33,10 +36,21 @@ const useStyles = makeStyles((theme) => ({
   spinnerContainer: {
     display: "flex",
     justifyContent: "center",
+    alignItems: "center",
+    marginTop: theme.spacing(8),
+    height: "100%",
   },
   spinner: {
-    width: "60%",
-    height: "60%",
+    width: "65%",
+    height: "65%",
+  },
+  theEndContainer: {
+    display: "flex",
+    justifyContent: "center",
+    marginTop: theme.spacing(6),
+  },
+  theEnd: {
+    width: "400px",
   },
 }));
 
@@ -80,7 +94,14 @@ const App = () => {
       currentSubreddit = selectedSubreddit;
     }
 
-    fetch(redditUrlPath + currentSubreddit + "/" + items.sort + ".json")
+    let currentSort;
+    if (selectedSort === "") {
+      currentSort = items.sort;
+    } else {
+      currentSort = selectedSort;
+    }
+
+    fetch(redditUrlPath + currentSubreddit + "/" + currentSort + ".json")
       .then((res) => res.json())
       .then((data) => {
         window.scrollTo(0, 0);
@@ -102,12 +123,18 @@ const App = () => {
     } else {
       currentSubreddit = selectedSubreddit;
     }
+    let currentSort;
+    if (selectedSort === "") {
+      currentSort = items.sort;
+    } else {
+      currentSort = selectedSort;
+    }
 
     fetch(
       redditUrlPath +
         currentSubreddit +
         "/" +
-        items.sort +
+        currentSort +
         ".json?count=" +
         items.page * 5 +
         "&after=" +
@@ -115,7 +142,6 @@ const App = () => {
     )
       .then((res) => res.json())
       .then((data) => {
-        console.log(data);
         window.scrollTo(0, 0);
         setItems({
           ...items,
@@ -136,12 +162,18 @@ const App = () => {
     } else {
       currentSubreddit = selectedSubreddit;
     }
+    let currentSort;
+    if (selectedSort === "") {
+      currentSort = items.sort;
+    } else {
+      currentSort = selectedSort;
+    }
 
     fetch(
       redditUrlPath +
         currentSubreddit +
         "/" +
-        items.sort +
+        currentSort +
         ".json?count=" +
         items.page / 5 +
         "&after=" +
@@ -189,11 +221,19 @@ const App = () => {
   const changeSort = (sort) => {
     setIsLoading(true);
     setSelectedSort(sort);
+    let currentSubreddit;
+    if (selectedSubreddit === "") {
+      currentSubreddit = items.currentSubreddit;
+    } else {
+      currentSubreddit = selectedSubreddit;
+    }
     setItems({
       ...items,
       files: [],
+      currentSubreddit: currentSubreddit,
+      sort: sort,
     });
-    fetch(redditUrlPath + items.currentSubreddit + "/" + sort + ".json")
+    fetch(redditUrlPath + currentSubreddit + "/" + sort + ".json")
       .then((res) => res.json())
       .then((data) => {
         setItems({
@@ -222,7 +262,14 @@ const App = () => {
         </div>
       ) : (
         <div>
-          <CardCollection files={items.files} icon={ren} />
+          {items.files.length > 0 ? (
+            <CardCollection files={items.files} icon={ren} />
+          ) : (
+            <div className={classes.theEndContainer}>
+              <img classes={classes.theEnd} src={theEnd} />
+            </div>
+          )}
+
           <div className={classes.buttonContainer}>
             {items.page > 1 && (
               <Button
@@ -239,14 +286,17 @@ const App = () => {
                 Page {items.page}
               </Box>
             </Typography>
-            <Button
-              variant="contained"
-              size="large"
-              color="secondary"
-              onClick={nextPage()}
-            >
-              next
-            </Button>
+
+            {items.files.length > 0 && (
+              <Button
+                variant="contained"
+                size="large"
+                color="secondary"
+                onClick={nextPage()}
+              >
+                next
+              </Button>
+            )}
           </div>
         </div>
       )}
