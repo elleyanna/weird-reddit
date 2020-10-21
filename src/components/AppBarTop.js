@@ -49,6 +49,7 @@ function AppBarTop({
   const handleSubredditMenuClick = (event) => {
     setAnchorSubredditMenu(event.currentTarget);
   };
+  
   const handleSortMenuClick = (event) => {
     setAnchorSortMenu(event.currentTarget);
   };
@@ -57,6 +58,7 @@ function AppBarTop({
     onSubredditMenuItemSelected(event.currentTarget.title);
     setAnchorSubredditMenu(null);
   };
+
   const handleSortOptionClick = (event) => {
     onSortOptionSelected(event.currentTarget.title);
     setAnchorSortMenu(null);
@@ -66,6 +68,7 @@ function AppBarTop({
     setAnchorSortMenu(null);
     setAnchorSubredditMenu(null);
   };
+
   return (
     <AppBar
       className={classes.appBarContainer}
