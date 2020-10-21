@@ -86,6 +86,7 @@ const App = () => {
   });
 
   useEffect(() => {
+
     setIsLoading(true);
     let currentSubreddit;
     if (selectedSubreddit === "") {
@@ -101,7 +102,7 @@ const App = () => {
       currentSort = selectedSort;
     }
 
-    fetch(redditUrlPath + currentSubreddit + "/" + currentSort + ".json")
+    fetch(redditUrlPath + currentSubreddit + "/" + currentSort + ".json?" + "limit=" + 24)
       .then((res) => res.json())
       .then((data) => {
         window.scrollTo(0, 0);
@@ -135,8 +136,8 @@ const App = () => {
         currentSubreddit +
         "/" +
         currentSort +
-        ".json?count=" +
-        items.page * 5 +
+      
+        ".json?" + "limit=" + 24 + 
         "&after=" +
         items.after
     )
@@ -174,10 +175,10 @@ const App = () => {
         currentSubreddit +
         "/" +
         currentSort +
-        ".json?count=" +
-        items.page / 5 +
+        ".json?limit=" +
+        24 +
         "&after=" +
-        items.before
+        items.before 
     )
       .then((res) => res.json())
       .then((data) => {
