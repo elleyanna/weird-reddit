@@ -262,7 +262,7 @@ const App = () => {
           <img src={spinner} className={classes.spinner} />
         </div>
       ) : (
-        <div>
+        <React.Fragment>
           {items.files.length > 0 ? (
             <CardCollection files={items.files} icon={ren} />
           ) : (
@@ -299,7 +299,7 @@ const App = () => {
               </Button>
             )}
           </div>
-        </div>
+        </React.Fragment>
       )}
       <img
         alt="background"
