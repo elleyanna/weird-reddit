@@ -15,10 +15,6 @@ import eyeballs from "../assets/eyeballs.png";
 import { makeStyles } from "@material-ui/core/styles";
 
 const useStyles = makeStyles({
-  root: {
-    minWidth: 345,
-    maxWidth: 345,
-  },
   buttonBase: {
     display: "block",
     textAlign: "initial",
@@ -29,7 +25,7 @@ const CardItem = ({ file, icon }) => {
   const classes = useStyles();
 
   return (
-    <Card className={classes.root}>
+    <Card>
       <CardActionArea>
         <Link
           rel="noopener"

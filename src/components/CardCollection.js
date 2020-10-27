@@ -1,6 +1,6 @@
 import React from "react";
 
-import Card from "./CardItem.js";
+import CardItem from "./CardItem.js";
 import Container from "@material-ui/core/Container";
 import Grid from "@material-ui/core/Grid";
 
@@ -18,24 +18,22 @@ const useStyles = makeStyles((theme) => ({
 const CardCollection = ({ files, icon }) => {
   const classes = useStyles();
   return (
-    <div className={classes.root}>
-      <Container>
-        <Grid
-          container
-          alignItems="flex-start"
-          justify="space-between"
-          spacing={3}
-        >
-          {files.map((file, index) => {
-            return (
-              <Grid key={index} item>
-                <Card file={file} icon={icon} />
-              </Grid>
-            );
-          })}
-        </Grid>
-      </Container>
-    </div>
+    <Container className={classes.root}>
+      <Grid
+        container
+        alignItems="flex-start"
+        justify="space-between"
+        spacing={3}
+      >
+        {files.map((file, index) => {
+          return (
+            <Grid key={index} item xs={12} sm={6} md={4}>
+              <CardItem file={file} icon={icon} />
+            </Grid>
+          );
+        })}
+      </Grid>
+    </Container>
   );
 };
 
