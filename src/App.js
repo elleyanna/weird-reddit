@@ -208,7 +208,7 @@ const App = () => {
       files: [],
       currentSubreddit: sub,
     });
-    fetch(redditUrlPath + sub + "/" + items.sort + ".json")
+    fetch(redditUrlPath + sub + "/" + items.sort + ".json?" + "&limit=" + 24)
       .then((res) => res.json())
       .then((data) => {
         setItems({
@@ -222,6 +222,7 @@ const App = () => {
         setIsLoading(false);
       });
   };
+  
   const changeSort = (sort) => {
     setIsLoading(true);
     setSelectedSort(sort);
@@ -237,7 +238,7 @@ const App = () => {
       currentSubreddit: currentSubreddit,
       sort: sort,
     });
-    fetch(redditUrlPath + currentSubreddit + "/" + sort + ".json")
+    fetch(redditUrlPath + currentSubreddit + "/" + sort + ".json?" + "&limit=" + 24)
       .then((res) => res.json())
       .then((data) => {
         setItems({
