@@ -102,7 +102,7 @@ const App = () => {
       currentSort = selectedSort;
     }
 
-    fetch(redditUrlPath + currentSubreddit + "/" + currentSort + ".json?" 
+    fetch(redditUrlPath + currentSubreddit + "/" + currentSort + ".json?limit=24" 
     )
       .then((res) => res.json())
       .then((data) => {
@@ -139,6 +139,7 @@ const App = () => {
         currentSort +
         ".json?" + 
         "&count=" + (items.page * 25) +
+        "&limit=" + 24 +
         "&after=" +
         items.after 
     )
@@ -178,6 +179,7 @@ const App = () => {
         currentSort +
         ".json?" +
         "&count=" + (((items.page - 1) * 25) - 1) +
+        "&limit=" + 24 +
         "&before=" +
         items.before 
     )
