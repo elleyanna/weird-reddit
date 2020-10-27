@@ -19,10 +19,29 @@ const useStyles = makeStyles({
     display: "block",
     textAlign: "initial",
   },
+  nsfw: {
+    filter: "blur(5px)"
+  }
 });
 
 const CardItem = ({ file, icon }) => {
   const classes = useStyles();
+
+  const getCardMediaImage = (imageData) => {
+    switch(true) {      
+      case imageData.thumbnail === "nsfw":
+        return imageData.url_overridden_by_dest;
+      case imageData.domain.includes("i.redd.it"):
+        return imageData.url;
+      case imageData.url.includes(".jpg"):
+          return imageData.url;
+      case imageData.url.includes("youtube"):
+          return imageData.thumbnail;
+      case imageData.url.includes(".gifv"):
+          return imageData.thumbnail;
+      default: return eyeballs;
+    }
+  };
 
   return (
     <Card>
@@ -41,18 +60,11 @@ const CardItem = ({ file, icon }) => {
           />
           <CardMedia
             component="img"
-            src={
-              file.data.thumbnail === "nsfw"
-                ? file.data.url_overridden_by_dest
-                : file.data.domain.includes("i.redd.it")
-                ? file.data.url
-                : file.data.thumbnail
-                ? file.data.thumbnail
-                : eyeballs
-            }
+            src={getCardMediaImage(file.data)}
             alt={file.data.url}
-            height="160"
+            height="180"
             title={file.data.title}
+            className={file.data.thumbnail === "nsfw" ? classes.nsfw : null}
           />
         </Link>
       </CardActionArea>
