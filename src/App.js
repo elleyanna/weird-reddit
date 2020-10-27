@@ -222,7 +222,7 @@ const App = () => {
         setIsLoading(false);
       });
   };
-  
+
   const changeSort = (sort) => {
     setIsLoading(true);
     setSelectedSort(sort);
@@ -258,6 +258,7 @@ const App = () => {
       <AppBarTop
         subreddits={subredditArray}
         sortOptions={sortArray}
+        selectedSort={selectedSort}
         onSubredditMenuItemSelected={changeSubreddit}
         onSortOptionSelected={changeSort}
       />

@@ -35,8 +35,9 @@ const useStyles = makeStyles((theme) => ({
 function AppBarTop({
   onSubredditMenuItemSelected,
   onSortOptionSelected,
+  selectedSort,
   sortOptions,
-  subreddits,
+  subreddits
 }) {
   const classes = useStyles();
 
@@ -126,14 +127,14 @@ function AppBarTop({
             weird reddit
           </Box>
         </Typography>
-        <Button
+        {/* <Button
           aria-controls="fade-menu"
           aria-haspopup="true"
           onClick={handleSortMenuClick}
           variant="outlined"
         >
-          Sort by
-        </Button>
+          Sort by: {selectedSort ? selectedSort : "hot"}
+        </Button> */}
         <Menu
           id="fade-menu"
           anchorEl={anchorSortMenu}
