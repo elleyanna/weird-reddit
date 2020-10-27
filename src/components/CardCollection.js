@@ -8,10 +8,8 @@ import { makeStyles } from "@material-ui/core/styles";
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    flexGrow: 1,
-    paddingTop: "60px",
-    marginTop: "60px",
-    marginBottom: "60px",
+    paddingTop: "120px",
+    paddingBottom: "60px",
   },
 }));
 
@@ -21,7 +19,7 @@ const CardCollection = ({ files, icon }) => {
     <Container className={classes.root}>
       <Grid
         container
-        alignItems="flex-start"
+        alignItems="center"
         justify="space-between"
         spacing={3}
       >
