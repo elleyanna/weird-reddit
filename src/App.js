@@ -63,8 +63,6 @@ const App = () => {
     "CreepyArt",
     "UnusualArt",
     "AlternativeArt",
-    "WtfArt",
-    "ATBGE",
     "Wimmelbilder",
     "SurrealMemes",
     "AnimalsWithoutNecks",
