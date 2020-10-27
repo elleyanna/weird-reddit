@@ -62,11 +62,11 @@ const App = () => {
   const subredditArray = [
     "CreepyArt",
     "UnusualArt",
-    "alternativeart",
-    "wtfart",
-    "atbge",
-    "wimmelbilder",
-    "surrealmemes",
+    "AlternativeArt",
+    "WtfArt",
+    "ATBGE",
+    "Wimmelbilder",
+    "SurrealMemes",
     "AnimalsWithoutNecks",
   ];
 
@@ -102,7 +102,8 @@ const App = () => {
       currentSort = selectedSort;
     }
 
-    fetch(redditUrlPath + currentSubreddit + "/" + currentSort + ".json?" + "limit=" + 24)
+    fetch(redditUrlPath + currentSubreddit + "/" + currentSort + ".json?" 
+    )
       .then((res) => res.json())
       .then((data) => {
         window.scrollTo(0, 0);
@@ -136,10 +137,10 @@ const App = () => {
         currentSubreddit +
         "/" +
         currentSort +
-      
-        ".json?" + "limit=" + 24 + 
+        ".json?" + 
+        "&count=" + (items.page * 25) +
         "&after=" +
-        items.after
+        items.after 
     )
       .then((res) => res.json())
       .then((data) => {
@@ -175,16 +176,16 @@ const App = () => {
         currentSubreddit +
         "/" +
         currentSort +
-        ".json?limit=" +
-        24 +
-        "&after=" +
+        ".json?" +
+        "&count=" + (((items.page - 1) * 25) - 1) +
+        "&before=" +
         items.before 
     )
       .then((res) => res.json())
       .then((data) => {
         window.scrollTo(0, 0);
         let newState = {
-          ...items,
+          ...items,  
           files: data.data.children,
           after: data.data.after,
           before: data.data.before,

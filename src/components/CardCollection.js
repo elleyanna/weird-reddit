@@ -10,7 +10,7 @@ const useStyles = makeStyles((theme) => ({
   root: {
     paddingTop: "120px",
     paddingBottom: "60px",
-  },
+  }
 }));
 
 const CardCollection = ({ files, icon }) => {
