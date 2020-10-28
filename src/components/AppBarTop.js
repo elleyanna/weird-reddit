@@ -122,7 +122,7 @@ function AppBarTop({
         >
           <img src={githubIcon} alt="octocat" className={classes.githubIcon} />
         </Link>
-        <Typography variant="h3" className={classes.title}>
+        <Typography variant="h4" className={classes.title}>
           <Box fontFamily="Monospace" m={1}>
             weird reddit
           </Box>
