@@ -6,9 +6,12 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 ## Prerequisites
 
-### Node.js
+Node.js
+
+## To run locally
 
 ### 1. Clone the project
+`git clone git@github.com:elleyanna/weird-reddit.git`
 
 ### 2. Install npm
 `npm i`
