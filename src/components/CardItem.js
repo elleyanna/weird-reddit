@@ -39,7 +39,11 @@ const CardItem = ({ file, icon }) => {
           return imageData.thumbnail;
       case imageData.url.includes(".gifv"):
           return imageData.thumbnail;
-      default: return eyeballs;
+      case imageData.thumbnail === ("self"):
+          return eyeballs
+      case imageData.thumbnail === ("default"):
+            return eyeballs
+      default: return imageData.thumbnail;
     }
   };
 

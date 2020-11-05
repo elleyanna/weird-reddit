@@ -49,10 +49,6 @@ function AppBarTop({
   const handleSubredditMenuClick = (event) => {
     setAnchorSubredditMenu(event.currentTarget);
   };
-  
-  // const handleSortMenuClick = (event) => {
-  //   setAnchorSortMenu(event.currentTarget);
-  // };
 
   const handleSubredditMenuItemClick = (event) => {
     onSubredditMenuItemSelected(event.currentTarget.title);
@@ -126,14 +122,6 @@ function AppBarTop({
             weird reddit
           </Box>
         </Typography>
-        {/* <Button
-          aria-controls="fade-menu"
-          aria-haspopup="true"
-          onClick={handleSortMenuClick}
-          variant="outlined"
-        >
-          Sort by: {selectedSort ? selectedSort : "hot"}
-        </Button> */}
         <Menu
           id="fade-menu"
           anchorEl={anchorSortMenu}

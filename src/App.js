@@ -114,7 +114,7 @@ const App = () => {
         setIsLoading(false);
       });
       // eslint-disable-next-line
-  }, []);
+  }, []);    
 
   const nextPage = () => () => {
     setIsLoading(true);
