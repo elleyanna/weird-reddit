@@ -268,7 +268,7 @@ const App = () => {
       ) : (
         <React.Fragment>
           {items.files.length > 0 ? (
-            <CardCollection files={items.files} icon={ren} />
+            <CardCollection files={items.files} icon={ren} subreddit={(selectedSubreddit === "" || selectedSubreddit.includes("+")) ? "All" : selectedSubreddit} />
           ) : (
             <div className={classes.theEndContainer}>
               <img alt="end" classes={classes.theEnd} src={theEnd} />
