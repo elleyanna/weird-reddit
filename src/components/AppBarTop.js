@@ -2,7 +2,6 @@ import React from "react";
 
 import AppBar from "@material-ui/core/AppBar";
 import Box from "@material-ui/core/Box";
-import Button from "@material-ui/core/Button";
 import Fade from "@material-ui/core/Fade";
 import IconButton from "@material-ui/core/IconButton";
 import Link from "@material-ui/core/Link";
@@ -51,9 +50,9 @@ function AppBarTop({
     setAnchorSubredditMenu(event.currentTarget);
   };
   
-  const handleSortMenuClick = (event) => {
-    setAnchorSortMenu(event.currentTarget);
-  };
+  // const handleSortMenuClick = (event) => {
+  //   setAnchorSortMenu(event.currentTarget);
+  // };
 
   const handleSubredditMenuItemClick = (event) => {
     onSubredditMenuItemSelected(event.currentTarget.title);

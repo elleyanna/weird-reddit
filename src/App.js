@@ -113,6 +113,7 @@ const App = () => {
         });
         setIsLoading(false);
       });
+      // eslint-disable-next-line
   }, []);
 
   const nextPage = () => () => {
@@ -206,7 +207,7 @@ const App = () => {
       files: [],
       currentSubreddit: sub,
     });
-    fetch(redditUrlPath + sub + "/" + items.sort + ".json?" + "&limit=" + 24)
+    fetch(redditUrlPath + sub + "/" + items.sort + ".json?&limit=" + 24)
       .then((res) => res.json())
       .then((data) => {
         setItems({
@@ -236,7 +237,7 @@ const App = () => {
       currentSubreddit: currentSubreddit,
       sort: sort,
     });
-    fetch(redditUrlPath + currentSubreddit + "/" + sort + ".json?" + "&limit=" + 24)
+    fetch(redditUrlPath + currentSubreddit + "/" + sort + ".json?&limit=" + 24)
       .then((res) => res.json())
       .then((data) => {
         setItems({
@@ -262,7 +263,7 @@ const App = () => {
       />
       {isLoading ? (
         <div className={classes.spinnerContainer}>
-          <img src={spinner} className={classes.spinner} />
+          <img alt="spinner" src={spinner} className={classes.spinner} />
         </div>
       ) : (
         <React.Fragment>
@@ -270,7 +271,7 @@ const App = () => {
             <CardCollection files={items.files} icon={ren} />
           ) : (
             <div className={classes.theEndContainer}>
-              <img classes={classes.theEnd} src={theEnd} />
+              <img alt="end" classes={classes.theEnd} src={theEnd} />
             </div>
           )}
 
