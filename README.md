@@ -6,7 +6,7 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 ## Prerequisites
 
-### Node.
+### Node.js
 
 ### 1. Clone the project
 
